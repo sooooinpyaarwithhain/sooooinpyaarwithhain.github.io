@@ -434,8 +434,8 @@
   /* photo lightbox… hidden until opened */
   .lightbox { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; background: rgba(30,8,14,0.92); padding: 24px; backdrop-filter: blur(3px); }
   .lightbox.open { display: flex; animation: fadeIn 0.3s ease both; }
-  body.lb-open { overflow: hidden; }
-  .lightbox { overscroll-behavior: contain; touch-action: none; }
+  body.lb-open { position: fixed; left: 0; right: 0; width: 100%; overflow: hidden; }
+  .lightbox { overscroll-behavior: contain; }
   .lightbox .ph { width: min(90vw, 760px); aspect-ratio: 4/3; max-height: 82vh; border-radius: 16px; }
   .lightbox .close { position: absolute; top: 18px; right: 20px; width: 42px; height: 42px; border-radius: 50%; background: rgba(0,0,0,0.45); border: 1px solid var(--gold); color: var(--gold-hi); font-size: 1.5rem; line-height: 1; cursor: pointer; z-index: 2; display: grid; place-items: center; transition: background 0.2s; }
   .lightbox .close:hover, .lightbox .close:focus-visible { background: var(--maroon); outline: none; }
@@ -918,10 +918,13 @@ body.hero-animate .scroll-hint{animation:heroDropC .9s cubic-bezier(.2,.8,.25,1)
     big.style.cssText = "display:block;max-width:92vw;max-height:86vh;width:auto;height:auto;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)";
     lbInner.appendChild(big);
     lb.classList.add("open");
+    lbScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.top = (-lbScrollY) + "px";
     document.body.classList.add("lb-open");
   }
+  var lbScrollY = 0;
   document.querySelectorAll(".pola").forEach(function (c) { var im = c.querySelector("img"); if (!im) return; c.setAttribute("tabindex", "0"); c.setAttribute("role", "button"); c.addEventListener("click", function () { openLb(im); }); c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLb(im); } }); });
-  function closeLb() { lb.classList.remove("open"); document.body.classList.remove("lb-open"); }
+  function closeLb() { lb.classList.remove("open"); document.body.classList.remove("lb-open"); document.body.style.top = ""; window.scrollTo(0, lbScrollY); }
   document.getElementById("lbClose").addEventListener("click", closeLb);
   lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLb(); });
