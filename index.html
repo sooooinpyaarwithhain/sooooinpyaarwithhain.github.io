@@ -1090,7 +1090,8 @@ body.hero-animate .scroll-hint{animation:heroDropC .9s cubic-bezier(.2,.8,.25,1)
       else { badge.innerHTML = "REPLAY"; badge.className = "live-badge is-replay"; txt.innerHTML = "Watch the " + pick.name + " telecast"; }
     }
     upd();
-    setInterval(upd, 5000);
+    setInterval(upd, 2000);
+    try { new MutationObserver(upd).observe(document.body, { attributes: true, attributeFilter: ["class"] }); } catch (e) {}
   })();
 
   /* ---------- hero sparkles + parallax + gate trail ---------- */
