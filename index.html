@@ -318,6 +318,25 @@
   .evitem { display: flex; flex-direction: column; align-items: center; width: 100%; }
   .dir-btn { margin-top: 18px; display: inline-flex; align-items: center; gap: 7px; background: var(--maroon, #6e1b2c); color: var(--ivory, #fbf4e6); text-decoration: none; font-family: var(--body); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 11px 24px; border-radius: 999px; border: 1px solid var(--gold-hi, #c9a24b); box-shadow: 0 8px 20px rgba(60,20,30,0.22); transition: transform .3s, box-shadow .3s, background .3s; }
   .dir-btn:hover, .dir-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 13px 28px rgba(60,20,30,0.3); background: #83223a; outline: none; }
+  .live-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 150; display: none; align-items: center; justify-content: center; gap: 10px; overflow: hidden; background: var(--gold-foil); color: #5a1020; text-decoration: none; font-family: var(--body); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.04em; padding: 11px 18px; border-bottom: 1.5px solid #a67c2e; box-shadow: 0 5px 20px rgba(0,0,0,0.35); }
+  body.live-on .live-banner { display: flex; animation: bannerDrop 0.6s cubic-bezier(.2,.9,.3,1.25) both; }
+  body.live-on .controls { top: 56px; }
+  @keyframes bannerDrop { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .live-banner::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 55%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.6), transparent); transform: translateX(-200%); animation: liveShimmer 4.2s ease-in-out infinite; pointer-events: none; }
+  @keyframes liveShimmer { 0% { transform: translateX(-200%); } 55%,100% { transform: translateX(360%); } }
+  .live-banner .live-text { position: relative; z-index: 1; }
+  .live-banner .live-text b { color: #a3101f; font-weight: 800; }
+  .live-banner .live-arrow { position: relative; z-index: 1; font-weight: 800; color: #5a1020; }
+  .live-badge { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 0.7rem; letter-spacing: 0.13em; padding: 4px 11px; border-radius: 999px; flex: 0 0 auto; }
+  .live-badge.is-live { background: #d61f1f; color: #fff; box-shadow: 0 0 0 0 rgba(214,31,31,0.65); animation: badgePulse 1.25s infinite; }
+  .live-badge.is-soon, .live-badge.is-replay { background: #5a1020; color: #f3d479; }
+  @keyframes badgePulse { 0% { box-shadow: 0 0 0 0 rgba(214,31,31,0.65); } 70% { box-shadow: 0 0 0 9px rgba(214,31,31,0); } 100% { box-shadow: 0 0 0 0 rgba(214,31,31,0); } }
+  .live-badge .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #fff; animation: dotBlink 1s steps(1,end) infinite; flex: 0 0 auto; }
+  @keyframes dotBlink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+  .live-banner:hover { filter: brightness(1.06); }
+  .live-btn { margin-top: 12px; display: inline-flex; align-items: center; gap: 7px; background: var(--gold-foil); color: #5a1020; text-decoration: none; font-family: var(--body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 26px; border-radius: 999px; border: 1px solid #a67c2e; box-shadow: 0 8px 20px rgba(150,120,40,0.3); transition: transform .3s, box-shadow .3s; animation: livePop 2.2s ease-in-out infinite; }
+  @keyframes livePop { 0%,100% { box-shadow: 0 8px 20px rgba(150,120,40,0.3); } 50% { box-shadow: 0 10px 28px rgba(201,162,75,0.5), 0 0 26px rgba(255,205,120,0.6); } }
+  .live-btn:hover, .live-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 13px 28px rgba(150,120,40,0.42); outline: none; }
   .reveal.in { animation: fadeUp 0.9s cubic-bezier(.2,.7,.3,1) both; }
   .hero-inner > * { animation: fadeUp 1s cubic-bezier(.2,.7,.3,1) both; }
   .hero-inner > *:nth-child(1){animation-delay:.05s}.hero-inner > *:nth-child(2){animation-delay:.18s}.hero-inner > *:nth-child(3){animation-delay:.32s}.hero-inner > *:nth-child(4){animation-delay:.46s}.hero-inner > *:nth-child(5){animation-delay:.60s}.hero-inner > *:nth-child(6){animation-delay:.74s}.hero-inner > *:nth-child(7){animation-delay:.88s}
@@ -521,6 +540,7 @@ body.hero-animate .scroll-hint{animation:heroDropC .9s cubic-bezier(.2,.8,.25,1)
 </div>
 
 <!-- GATE: maroon + muggu, light the fuse -->
+<a id="liveBanner" class="live-banner" href="https://hdlivestream.in/saisonaalhaindhavi" target="_blank" rel="noopener"><span class="live-badge" id="liveBadge"></span><span class="live-text"></span><span class="live-arrow">&#8594;</span></a>
 <div id="gate" class="maroon">
   <canvas id="gateMuggu" aria-hidden="true"></canvas>
   <div class="twinkle" aria-hidden="true"><i style="top:12%;left:18%;animation-delay:0s"></i><i style="top:20%;left:78%;animation-delay:.6s"></i><i style="top:30%;left:40%;animation-delay:1.2s"></i><i style="top:15%;left:60%;animation-delay:.3s"></i><i style="top:66%;left:24%;animation-delay:.9s"></i><i style="top:72%;left:80%;animation-delay:.2s"></i><i style="top:58%;left:10%;animation-delay:1.5s"></i><i style="top:82%;left:50%;animation-delay:.75s"></i><i style="top:40%;left:88%;animation-delay:1.1s"></i><i style="top:50%;left:6%;animation-delay:.45s"></i><i style="top:26%;left:92%;animation-delay:1.4s"></i><i style="top:88%;left:70%;animation-delay:.55s"></i></div>
@@ -599,7 +619,7 @@ body.hero-animate .scroll-hint{animation:heroDropC .9s cubic-bezier(.2,.8,.25,1)
     <div class="wrap">
       <div class="section-head"><div class="eyebrow" data-en="Five days of celebration" data-te="ఐదు రోజుల వేడుకలు">Five days of celebration</div><h2 data-en="Wedding Events" data-te="వివాహ వేడుకలు">Wedding Events</h2></div>
       <div class="evgrid">
-      <div class="evitem reveal"><figure class="evcard"><img src="assets/events/sangeeth.jpg" alt="Sangeeth… Saturday 28 November 2026, 7:00 PM, JD Convention, Shamshabad" loading="lazy"></figure><div class="dress"><div class="dress-h">Dress Code</div><div class="dl"><b>Men</b> Indo-Western / Kurta</div><div class="dl"><b>Women</b> Anything with shine & shimmer ✨</div></div><a class="dir-btn" href="https://maps.app.goo.gl/Ys4YMGVkKDBSwjZS7" target="_blank" rel="noopener">📍 <span>Get Directions</span></a></div>
+      <div class="evitem reveal"><figure class="evcard"><img src="assets/events/sangeeth.jpg" alt="Sangeeth… Saturday 28 November 2026, 7:00 PM, JD Convention, Shamshabad" loading="lazy"></figure><div class="dress"><div class="dress-h">Dress Code</div><div class="dl"><b>Men</b> Indo-Western / Kurta</div><div class="dl"><b>Women</b> Anything with shine & shimmer ✨</div></div><a class="dir-btn" href="https://maps.app.goo.gl/Ys4YMGVkKDBSwjZS7" target="_blank" rel="noopener">📍 <span>Get Directions</span></a><a class="live-btn" id="live-sangeet" href="https://hdlivestream.in/saisonaalhaindhavi" target="_blank" rel="noopener">🔴 <span>Watch Live</span></a></div>
       <div class="evitem reveal"><figure class="evcard"><img src="assets/events/haldi.jpg" alt="Haldi… Sunday 29 November 2026, 10:00 AM, SMR SM Vinay Casa Carino, Bandlaguda Jagir" loading="lazy"></figure><div class="dress"><div class="dress-h">Dress Code</div><div class="dl"><b>Men</b> Powder/light blue kurta</div><div class="dl"><b>Women</b> Powder Blue 🩵</div></div><a class="dir-btn" href="https://maps.app.goo.gl/p4vNce2MquNiVoPKA" target="_blank" rel="noopener">📍 <span>Get Directions</span></a></div>
       <div class="evitem reveal"><figure class="evcard"><img src="assets/events/mehendi.jpg" alt="Mehendi… Sunday 29 November 2026, 7:00 PM, SMR SM Vinay Casa Carino, Bandlaguda Jagir" loading="lazy"></figure><div class="dress"><div class="dress-h">Dress Code</div><div class="dl"><b>Everyone</b> Anything colourful! 🌈</div></div><a class="dir-btn" href="https://maps.app.goo.gl/p4vNce2MquNiVoPKA" target="_blank" rel="noopener">📍 <span>Get Directions</span></a></div>
       <div class="evitem reveal"><figure class="evcard"><img src="assets/events/pelli-koduku.jpg" alt="Pelli Koduku… Wednesday 02 December 2026, Morning, SMR SM Vinay Casa Carino, Bandlaguda Jagir" loading="lazy"></figure><div class="dress"><div class="dress-h">Dress Code</div><div class="dl"><b>Men</b> Kurta Pyjama</div><div class="dl"><b>Women</b> Traditional Attire</div></div><a class="dir-btn" href="https://maps.app.goo.gl/p4vNce2MquNiVoPKA" target="_blank" rel="noopener">📍 <span>Get Directions</span></a></div>
@@ -1033,6 +1053,44 @@ body.hero-animate .scroll-hint{animation:heroDropC .9s cubic-bezier(.2,.8,.25,1)
         })
         .catch(function () {});
     } catch (err) {}
+  })();
+
+  /* ---------- live telecast: dynamic banner + permanent per-event buttons ----------
+     To add an event: push {name, at, link, btn, teaser, start, liveEnd} (times are UTC = IST-5:30)
+     and add <a class="live-btn" id="(btn)" href="(link)" target="_blank" rel="noopener"></a> under that card. */
+  (function () {
+    var EVENTS = [
+      { name: "Sangeet", at: "7 PM", link: "https://hdlivestream.in/saisonaalhaindhavi", btn: "live-sangeet",
+        teaser: Date.parse("2026-11-28T03:30:00Z"),  /* 9:00 AM IST */
+        start:  Date.parse("2026-11-28T13:30:00Z"),  /* 7:00 PM IST */
+        liveEnd:Date.parse("2026-11-28T18:30:00Z") } /* 12:00 AM IST */
+    ];
+    var banner = document.getElementById("liveBanner");
+    var txt = banner && banner.querySelector(".live-text");
+    var badge = document.getElementById("liveBadge");
+    function st(e, now) { return now < e.teaser ? "pre" : now < e.start ? "teaser" : now < e.liveEnd ? "live" : "replay"; }
+    function upd() {
+      var now = Date.now();
+      EVENTS.forEach(function (e) {
+        var b = document.getElementById(e.btn); if (!b) return;
+        b.href = e.link;
+        var s = st(e, now);
+        b.innerHTML = s === "live" ? "🔴 <span>Watch Live</span>" : s === "replay" ? "📺 <span>Watch the Telecast</span>" : "🔴 <span>Live at " + e.at + "</span>";
+      });
+      var pick = null, mode = null;
+      EVENTS.forEach(function (e) { if (st(e, now) === "live") { pick = e; mode = "live"; } });
+      if (!pick) EVENTS.forEach(function (e) { if (st(e, now) === "teaser" && (!pick || e.start < pick.start)) { pick = e; mode = "teaser"; } });
+      if (!pick) EVENTS.forEach(function (e) { if (now >= e.liveEnd && (!pick || e.liveEnd > pick.liveEnd)) { pick = e; mode = "replay"; } });
+      var show = pick && !document.body.classList.contains("locked");
+      document.body.classList.toggle("live-on", !!show);
+      if (!show) return;
+      banner.href = pick.link;
+      if (mode === "live") { badge.innerHTML = '<span class="live-dot"></span>LIVE'; badge.className = "live-badge is-live"; txt.innerHTML = "Watch the " + pick.name + " <b>now</b>"; }
+      else if (mode === "teaser") { badge.innerHTML = "SOON"; badge.className = "live-badge is-soon"; txt.innerHTML = pick.name + " goes <b>LIVE</b> at " + pick.at + " today"; }
+      else { badge.innerHTML = "REPLAY"; badge.className = "live-badge is-replay"; txt.innerHTML = "Watch the " + pick.name + " telecast"; }
+    }
+    upd();
+    setInterval(upd, 5000);
   })();
 
   /* ---------- hero sparkles + parallax + gate trail ---------- */
